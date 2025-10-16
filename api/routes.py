@@ -11,5 +11,6 @@ def ask_llama(request: PromptRequest):
     answer = query_llama(request.prompt)
 
     return LlamaResponse(
-        response=answer
+        response=answer,
+        energy_usage=0.0  # TODO: Calculer l'utilisation réelle d'énergie
     )
