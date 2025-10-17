@@ -79,10 +79,11 @@ L’application sera disponible sur [http://localhost:3000](http://localhost:300
 - **CPU moyen** : ~65%
 - **Mémoire utilisée** : ~2.3 GB
 - **Temps d’exécution** : ~10s
-- **Consommation estimée** : ~15–20 Wh (pour la génération)
+- **Consommation estimée** : relativement élevée pour une tâche courte
 
 ### Comparaison
-Microsoft Word (30 minutes d’édition simple) ≈ 5–7 Wh.  
+
+À titre de comparaison, une session de 30 minutes d’édition simple sur Microsoft Word nécessite nettement moins de ressources.
 
 **Conclusion** : l’inférence IA locale consomme significativement plus d’énergie, malgré l’avantage de garder les données en local.
 
