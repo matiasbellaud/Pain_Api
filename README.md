@@ -32,7 +32,7 @@ pAIn est une application web qui génère des recettes personnalisées à partir
 ## Technologies utilisées
 - **Frontend** : React.js
 - **Backend** : Python (FastAPI) 
-- **IA** : LLaMA3 via Ollama (local)
+- **IA** : LLaMA3 via Ollama (local marche sans connexion internet)
 - **Monitoring** : psutil (mesure CPU/mémoire)
 
 Python est aujourd’hui la langue principale de l’écosystème IA, et offre une intégration fluide avec les outils de machine learning.
