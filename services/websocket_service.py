@@ -7,31 +7,25 @@ import psutil
 
 
 class MetricsStreamer:
-    """Service pour streamer les métriques système via WebSocket."""
-
     def __init__(self):
         self.active_connections: list[WebSocket] = []
         self.streaming = False
 
     async def connect(self, websocket: WebSocket):
-        """Accepte une nouvelle connexion WebSocket."""
         await websocket.accept()
         self.active_connections.append(websocket)
 
     def disconnect(self, websocket: WebSocket):
-        """Déconnecte un client WebSocket."""
         if websocket in self.active_connections:
             self.active_connections.remove(websocket)
 
     async def send_metrics(self, websocket: WebSocket, data: Dict[str, Any]):
-        """Envoie les métriques à un client spécifique."""
         try:
             await websocket.send_json(data)
         except Exception as e:
             self.disconnect(websocket)
 
     async def broadcast_metrics(self, data: Dict[str, Any]):
-        """Diffuse les métriques à tous les clients connectés."""
         disconnected = []
         for connection in self.active_connections:
             try:
@@ -40,26 +34,15 @@ class MetricsStreamer:
                 print(f"Erreur de broadcast: {e}")
                 disconnected.append(connection)
 
-        # Nettoyer les connexions déconnectées
         for conn in disconnected:
             self.disconnect(conn)
 
     def get_detailed_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques détaillées du système."""
-        # Métriques CPU
         cpu_percent = psutil.cpu_percent(interval=0.1, percpu=True)
         cpu_freq = psutil.cpu_freq()
-
-        # Métriques mémoire
         memory = psutil.virtual_memory()
-
-        # Métriques disque
         disk = psutil.disk_usage('/')
-
-        # Métriques réseau
         net_io = psutil.net_io_counters()
-
-        # Processus en cours
         process = psutil.Process()
         process_memory = process.memory_info()
 
@@ -94,13 +77,6 @@ class MetricsStreamer:
         }
 
     async def stream_metrics(self, websocket: WebSocket, interval: float = 1.0):
-        """
-        Stream les métriques en continu à un intervalle défini.
-
-        Args:
-            websocket: La connexion WebSocket
-            interval: Intervalle en secondes entre chaque envoi (défaut: 1.0)
-        """
         try:
             while True:
                 metrics = self.get_detailed_metrics()
@@ -111,5 +87,4 @@ class MetricsStreamer:
             self.disconnect(websocket)
 
 
-# Instance globale du streamer
 metrics_streamer = MetricsStreamer()

@@ -12,7 +12,6 @@ app = FastAPI(
 
 app.include_router(router)
 
-# Servir les fichiers statiques si le dossier existe
 if os.path.exists("static"):
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -22,5 +21,4 @@ def root():
 
 @app.get("/demo")
 def demo():
-    """Page de démonstration du WebSocket de monitoring."""
     return FileResponse("static/websocket-demo.html")

@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
 class ResourceMetrics(BaseModel):
-    """Métriques de ressources système."""
     elapsed_time_seconds: float
     cpu_percent: float
     cpu_time_seconds: float
@@ -13,5 +12,5 @@ class ResourceMetrics(BaseModel):
 
 class LlamaResponse(BaseModel):
     response: str
-    energy_usage: float  # En Wh pour compatibilité
+    energy_usage: float
     metrics: Optional[ResourceMetrics] = None
